@@ -460,4 +460,59 @@ truehist(weights)
       # Construct the normal QQ-plot of the duration data
       qqPlot(geyser$duration,main="QQ-plot")
       
+      # Use the matrix function to create a matrix with three rows and two columns
+      layoutMatrix <- matrix(
+        c(
+          0, 1,
+          2, 0,
+          0, 3
+        ), 
+        byrow = TRUE, 
+        nrow = 3
+      )
+      # Call the layout() function to set up the plot array
+      layout(layoutMatrix)
       
+      # Show where the three plots will go 
+      layout.show(3)
+      
+      # Set up the plot array
+      layout(layoutMatrix)
+      
+      # Construct vectors indexB and indexA
+      indexB <- which(whiteside$Insul=="Before")
+      indexA <- which(whiteside$Insul=="After")
+      
+      # Create plot 1 and add title
+      plot(whiteside$Temp[indexB], whiteside$Gas[indexB],
+           ylim = c(0,8))
+      title("Before data only")
+      
+      # Create plot 2 and add title
+      plot(whiteside$Temp,whiteside$Gas,
+           ylim=c(0,8))
+      title("Complete dataset")
+      
+      
+      
+      # Create plot 3 and add title
+      plot(whiteside$Temp[indexA],whiteside$Gas[indexA],
+           ylim= c(0,8) )
+      title("After data only")
+      
+      # Create row1, row2, and layoutVector
+      row1 <- c(1,0,0)
+      row2 <- c(0,2,2)
+      layoutVector <- c(row1,row2,row2)
+      
+      # Convert layoutVector into layoutMatrix
+      layoutMatrix <- matrix(layoutVector, byrow = T, nrow = 3)
+      
+      # Set up the plot array
+      layout(layoutMatrix)
+      
+      # Plot scatterplot
+      plot(Boston$rad,Boston$zn)
+      
+      # Plot sunflower plot
+      sunflowerplot(Boston$rad,Boston$zn)
