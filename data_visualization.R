@@ -516,3 +516,40 @@ truehist(weights)
       
       # Plot sunflower plot
       sunflowerplot(Boston$rad,Boston$zn)
+      
+      # Create a table of Cylinders frequencies
+      tbl <- table(Cars93$Cylinders)
+      
+      # Generate a horizontal barplot of these frequencies
+      mids <- barplot(tbl, horiz = TRUE, 
+                      col = "transparent",
+                      names.arg = "")
+      
+      # Add names labels with text()
+      text(20, mids, names(tbl))
+      
+      # Add count labels with text()
+      text(35, mids, as.numeric(tbl))
+      
+      # Create a table of Cylinders frequencies
+      tbl <- table(Cars93$Cylinders)
+      
+      # Generate a horizontal barplot of these frequencies
+      mids <- barplot(tbl, horiz = TRUE, 
+                      col = "transparent",
+                      names.arg = "")
+      
+      # Add names labels with text()
+      text(20, mids, names(tbl))
+      
+      # Add count labels with text()
+      text(35, mids, as.numeric(tbl))
+      
+      # Call symbols() to create the default bubbleplot
+      symbols(Cars93$Horsepower, Cars93$MPG.city,
+              circles = sqrt(Cars93$Price))
+      
+      # Repeat, with the inches argument specified
+      symbols(Cars93$Horsepower, Cars93$MPG.city,
+              circles = sqrt(Cars93$Price),
+              inches = 0.1)
