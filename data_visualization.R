@@ -553,3 +553,55 @@ truehist(weights)
       symbols(Cars93$Horsepower, Cars93$MPG.city,
               circles = sqrt(Cars93$Price),
               inches = 0.1)
+      
+      
+    ##### visualizar y salvar los resultados
+      
+      library(knitr)
+      # Call png() with the name of the file we want to create
+      png("bubbleplot.png")
+      
+      # Re-create the plot from the last exercise
+      symbols(Cars93$Horsepower, Cars93$MPG.city,
+              circles = sqrt(Cars93$Price),
+              inches = 0.1)
+      
+      # Save our file and return to our interactive session
+      dev.off()
+      
+      # Verify that we have created the file
+      list.files(pattern = "png")
+      
+      # Iliinsky and Steele color name vector
+      IScolors <- c("red", "green", "yellow", "blue",
+                    "black", "white", "pink", "cyan",
+                    "gray", "orange", "brown", "purple")
+      
+      # Create the data for the barplot
+      barWidths <- c(rep(2, 6), rep(1, 6))
+      
+      # Recreate the horizontal barplot with colored bars
+      barplot(rev(barWidths), horiz = TRUE, 
+              col = rev(IScolors), axes = FALSE,
+              names.arg = rev(IScolors), las = 1)
+      # Iliinsky and Steele color name vector
+      IScolors <- c("red", "green", "yellow", "blue",
+                    "black", "white", "pink", "cyan",
+                    "gray", "orange", "brown", "purple")
+      
+      # Create the `cylinderLevel` variable
+      cylinderLevel <- as.numeric(Cars93$Cylinders)
+      
+      # Create the colored bubbleplot
+      symbols(Cars93$Horsepower,Cars93$MPG.city, 
+              circles = cylinderLevel, inches = 0.2, 
+              bg = IScolors[cylinderLevel])
+      
+      # Create a table of Cylinders by Origin
+      tb1<-table(Cars93$Cylinders,Cars93$Origin)
+      
+      # Create the default stacked barplot
+      barplot(tb1)
+      
+      # Enhance this plot with color
+      barplot(tb1,col=IScolors)

@@ -1,6 +1,6 @@
 ### Introduction to neurohacking in R
 
-setwd("D:/Users/Alfonso/Documentos/R/neurohacking_r/")
+
 getwd()
 library(oro.dicom)
 library(oro.nifti)
@@ -19,8 +19,8 @@ dim(slice$img[[1]])
 
 image(slice$img[[1]],col=gray(0:64/64))
 
-## transporner los datos usando la función t() perminte modificar la forma en que se visualizar la imagen
-## de esta forma es posible verla con otra orientación 
+## transporner los datos usando la funci?n t() perminte modificar la forma en que se visualizar la imagen
+## de esta forma es posible verla con otra orientaci?n 
 
 d=dim(t(slice$img[[1]]))
 image(1:d[1],1:d[2],t(slice$img[[1]]),col=gray(0:64/64))
@@ -36,7 +36,7 @@ hist(slice$img[[1]][,],
 breaks=50,xlab = "Flair",col=rgb(0,0,1,),
 prob=T,main='densidad de pixeles')
 
-#### analizar la información del header
+#### analizar la informaci?n del header
 
 hdr <- slice$hdr[[1]]
 names(hdr)
@@ -80,7 +80,7 @@ print({nii_T1<-readNIfTI(fname = fname)})
 d <- dim(nii_T1)
 image(1:d[1],1:d[2],nii_T1[,,11],xlab="",ylab="",)
 
-### otra forma más sencilla de hacerlo
+### otra forma m?s sencilla de hacerlo
 
 image(nii_T1,z=11,plot.type="single")
 
@@ -98,22 +98,34 @@ col=rgb(0,0,1,1/2),main = "")
 hist(nii_T1[nii_T1 >20], breaks = 75, prob=T,
 xlab="non zero T1 intensities",col=rgb(0,0,1,1/2),main="")
 
-### Crear un vector lógico
+### Crear un vector l?gico
 is_btw_300_400 <- ( (nii_T1>300) & (nii_T1<400))
 nii_T1_mask <- nii_T1
 nii_T1_mask[!is_btw_300_400]=NA
 overlay(nii_T1,nii_T1_mask,z=11,plot.type="single")
 ### si quisieramos ver todas las rebanadas simplemente se teclea overlay(nii_t1,nii_T1_mask)
 
-#### crear una máscara
+#### crear una m?scara
+setwd("../../kirby21/visit_1/113/")
 
-### nota: para una máscara solo del cerebro deben quitarse hueso y meninges
+## operaciones con imagenes
 
-mask <- (nii_T1[nii_T1>20]=1)
-masked_T1 <- nii_T1*mask 
+T1<- readNIfTI("113-01-MPRAGE.nii.gz",reorient = F)
+orthographic(T1,crosshairs=F)
+T1_mask <- readNIfTI("113-01-MPRAGE_mask.nii.gz",reorient = F)
+orthographic(T1_mask,crosshairs=F)
 
+### para extraer el cerebro de la imagen simplemente multiplicamos la imagen de nuestra
+### T1 ppr la mascara del cerebro previamente creada
 
+masked_T1 <- T1*T1_mask
+orthographic(masked_T1,crosshairs=F,text("brain",pos =2,col="white" ))
+# A continuaciÃ³n se realiza otro ejmplo de como sustaer una mejen de otra
+T1.follow <- readNIfTI(file.path("../../visit_2/113/113-02-MPRAGE.nii.gz"),reorient = F)
+orthographic(T1.follow,crosshairs=F)
 
+#restamos la imagen
 
-
-
+substract.T1 <- T1.follow - T1
+min(substract.T1)
+max(substract.T1)
